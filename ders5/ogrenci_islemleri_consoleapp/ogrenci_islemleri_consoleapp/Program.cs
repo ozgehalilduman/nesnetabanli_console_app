@@ -14,6 +14,7 @@ namespace ogrenci_islemleri_consoleapp
             ogrenci_islemler ogr = new ogrenci_islemler();
             ogr.ogrenci_ekle();
             ogr.ogrenci_ekle();
+            //iki tane eklememizin nedeni listele deyince girilen iki öğrenciyide listelesin diye
             ogr.ogrenci_listele();
             Console.ReadKey();            
         }
