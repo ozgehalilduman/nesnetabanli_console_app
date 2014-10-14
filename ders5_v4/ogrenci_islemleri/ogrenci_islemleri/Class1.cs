@@ -31,24 +31,70 @@ namespace ogrenci_islemleri
         /// </summary>
         public void ogrenci_ekle()
         {
+            string hata = "";
             ogrenci ogr = new ogrenci();
             Console.Write("\tAdınızı Giriniz\t\t\t: ");
             ogr.ad = Console.ReadLine();
+            bool kontrol_Ad = ogr.ad.All(c => char.IsLetter(c));
+            if (!kontrol_Ad) { hata += "ADI alanına HATALI Giriş\n"; }
+
             Console.Write("\tSoyadınızı Giriniz\t\t: ");
             ogr.soyad = Console.ReadLine();
+            bool kontrol_Soyad = ogr.soyad.All(c => char.IsLetter(c));
+            if (!kontrol_Soyad) { hata += "SOYADI alanına HATALI Giriş\n"; }
+
             Console.Write("\tSınıfınızı Giriniz\t\t: ");
-            ogr.sinif = Console.ReadLine();
+            ogr.sinif = Console.ReadLine();           
+
             Console.Write("\tOkul Numaranızı Giriniz\t\t: ");
             ogr.okulno = Console.ReadLine();
-            Console.Write("\tCinsiyetinizi Giriniz(E/B)\t: ");
-            ogr.cinsiyet =Convert.ToChar(Console.ReadLine());
-            Console.Write("\tBoyunuzu Giriniz\t\t: ");
-            ogr.boy = Convert.ToByte(Console.ReadLine());
-            Console.Write("\tKilonuzu Giriniz\t\t: ");
-            ogr.kilo = Convert.ToByte(Console.ReadLine());
+            bool kontrol_Okulno = ogr.okulno.All(c => char.IsNumber(c));
+            if (!kontrol_Okulno) { hata += "OKULNO alanına HATALI Giriş\n"; }
+
+            try
+            {
+                Console.Write("\tCinsiyetinizi Giriniz(E/B)\t: ");
+                ogr.cinsiyet = Convert.ToChar(Console.ReadLine());
+                //girilen degerin sayısal olması durumunda hata urettiriyorum...
+                if (ogr.cinsiyet!='E'||ogr.cinsiyet!='B')
+                {
+                    throw new Exception();
+                }
+            }
+            catch
+            {
+                hata += "CİNSİYET Alanına HATALI Giriş \n";
+            }
+            bool kontrol_Cinsiyet = char.IsLetter(ogr.cinsiyet);
+            try {
+                Console.Write("\tBoyunuzu Giriniz\t\t: ");
+                ogr.boy = Convert.ToByte(Console.ReadLine());
+            }
+            catch 
+            {
+                 hata+="BOY Alanına HATALI Giriş \n";
+            }
+            try {
+                Console.Write("\tKilonuzu Giriniz\t\t: ");
+                ogr.kilo = Convert.ToByte(Console.ReadLine());
+            }
+            catch
+            {
+                hata += "KİLO Alanına HATALI Giriş \n";
+            }
             Console.WriteLine("-----------------------------");
             //girilen ogrenciyi listeye ekliyorum..
-            ogr_lst.Add(ogr);
+            if (hata == "")
+            {
+                ogr_lst.Add(ogr);
+            }
+            else
+            {
+                Console.WriteLine("*******HATALAR*********");
+                Console.WriteLine(hata);
+                Console.WriteLine("***********************");            
+            }
+            
         }
 
         /// <summary>
